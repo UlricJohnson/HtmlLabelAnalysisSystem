@@ -1,0 +1,13 @@
+/* 输入框表单 */
+#dataForm{
+    /*width: 400px;*/
+    height:inherit;
+    margin:auto;
+    margin-left:150px;
+
+}
+
+/* 输入框（表单的第1个子元素） */
+#dataForm > .layui-form-item[first-child] input.layui-input{
+    width: 400px;
+}
