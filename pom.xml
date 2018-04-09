@@ -9,6 +9,7 @@
     <modules>
         <module>Crawler</module>
         <module>Webend</module>
+        <module>Analysis</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -33,8 +34,12 @@
         <!-- 数据源：C3P0 -->
         <c3p0.version>0.9.5.2</c3p0.version>
 
+        <!-- log4j 启动器 -->
+        <log4j-springboot.version>1.3.8.RELEASE</log4j-springboot.version>
+
         <!-- mybatis启动器 -->
         <mybatis-springboot.version>1.3.1</mybatis-springboot.version>
+
     </properties>
 
     <dependencies>
@@ -53,10 +58,24 @@
             <version>${c3p0.version}</version>
         </dependency>
 
-        <!-- springboot web层启动器，默认使用 jackson -->
+        <!-- log4j 启动器 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j</artifactId>
+            <version>${log4j-springboot.version}</version>
+        </dependency>
+
+        <!-- springboot web层启动器，默认使用 jackson 和 logback -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 排除SpingBoot默认使用的 logback，而使用 log4j -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- springboot 测试 -->

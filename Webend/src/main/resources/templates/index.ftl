@@ -24,11 +24,12 @@
         </div>
 
         <#-- 在这里输入起始 URL 和计划爬取的网页数 -->
-        <form id="dataForm" class="layui-form" action="/user/findUserByUsername" method="post">
+        <form cid="dataForm" class="layui-form" action="/crawl/crawlThePages" method="post">
+        <#--<form cid="dataForm" class="layui-form" action="/user/findUserById" method="post">-->
             <div class="layui-form-item">
                 <label class="layui-form-label">输入框</label>
                 <div class="layui-input-block">
-                    <input class="layui-input" name="username" placeholder="请输入网页链接"
+                    <input class="layui-input" name="url" placeholder="请输入网页链接"
                            style="width: 350px;" type="text" required lay-verify="required" autocomplete="off">
                 </div>
             </div>
@@ -76,7 +77,7 @@
     <div class="layui-body">
         <div style="padding: 15px;">
             <h2>搜索结果：</h2>
-            <div id="result">${result}</div>
+            <div cid="result">${result}</div>
         </div>
     </div>
 </div>

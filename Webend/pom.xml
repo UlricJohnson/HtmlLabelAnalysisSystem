@@ -17,6 +17,8 @@
         <!-- 爬虫模块，版本跟父工程一致 -->
         <crawler.version>${parent.version}</crawler.version>
 
+        <!-- 数据分析模块，版本和父工程一致 -->
+
         <!-- freemarker启动器 -->
         <freemarker-springboot.version>1.5.3.RELEASE</freemarker-springboot.version>
     </properties>

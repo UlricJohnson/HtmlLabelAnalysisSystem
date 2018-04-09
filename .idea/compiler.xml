@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Analysis" />
         <module name="Crawler" />
         <module name="Webend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Analysis" target="1.8" />
       <module name="Crawler" target="1.8" />
       <module name="HtmlLabelAnalysisSystem" target="1.8" />
       <module name="Webend" target="1.8" />

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ink.ulricj.mapper.CarMapper">
+
+    <resultMap id="car_map" type="Car" >
+        <id property="cid" column="CID"/>
+        <result property="brand" column="BRAND"/>
+        <result property="userId" column="USER_ID"/>
+    </resultMap>
+
+    <!-- 批量添加汽车 -->
+    <insert id="insertCarBatchXML" parameterType="java.util.List" keyProperty="cid">
+        INSERT INTO tb_car (BRAND, USER_ID) VALUES
+        <foreach collection="list" item="car" separator=",">
+            (#{car.brand}, #{car.userId})
+        </foreach>
+    </insert>
+
+    <!-- 通过 userID 查询汽车 -->
+    <select id="selectCarByUserId" resultMap="car_map">
+        SELECT CID, BRAND, USER_ID FROM tb_car WHERE USER_ID = #{userId}
+    </select>
+
+</mapper>

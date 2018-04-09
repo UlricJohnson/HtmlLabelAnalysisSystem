@@ -33,4 +33,17 @@ public class UserService implements IUserService {
 
         return userList;
     }
+
+    /**
+     * 根据用户ID搜索用户及其车辆
+     *
+     * @param id
+     * @author Ulric
+     * @date 2018/3/9
+     */
+    @Override
+    public List<User> findUserById(Long id) {
+        System.out.println("====UserService--findUserById()");
+        return userMapper.findUserById(id);
+    }
 }

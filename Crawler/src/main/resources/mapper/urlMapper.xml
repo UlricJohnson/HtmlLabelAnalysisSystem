@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ink.ulricj.mapper.UrlMapper">
+
+    <!-- 1、单独插入一个 Url 对象信息 -->
+    <insert id="insertUrl" parameterType="Url" keyProperty="uid" keyColumn="UID">
+        INSERT INTO tb_url (URL, H5, ANALYSIS_TIME) VALUES (#{url}, #{h5}, #{analysisTime})
+    </insert>
+
+    <!-- 2、获取数据库中所有的 Url 及其对应的 Label$Number -->
+    <resultMap id="select_url_and_l$n" type="Url">
+        <id property="uid" column="UID"/>
+        <result property="url" column="URL"/>
+        <result property="h5" column="H5" javaType="Boolean"/>
+        <result property="analysisTime" column="ANALYSIS_TIME" javaType="java.sql.Timestamp"/>
+        <collection property="labelAndNumberList" ofType="LabelAndNumber" column="URL_ID">
+            <id property="lnId" column="LN_ID"/>
+            <result property="labelName" column="LABEL_NAME"/>
+            <result property="number" column="NUMBER"/>
+            <result property="urlId" column="URL_ID"/>
+        </collection>
+    </resultMap>
+    <select id="selectAllUrl" resultMap="select_url_and_l$n">
+        SELECT
+            u.*,
+            ln.*
+        FROM tb_url u
+        JOIN tb_label_and_number ln
+            ON u.uid = ln.url_id
+    </select>
+
+    <!-- 3、获取最新插入的主键 -->
+    <select id="selectLastInsertUId" resultType="Long">
+        SELECT MAX(uid) FROM tb_url
+    </select>
+</mapper>

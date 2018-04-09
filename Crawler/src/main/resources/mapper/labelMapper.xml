@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ink.ulricj.mapper.LabelMapper">
+
+    <!-- 判断标签是否为HTML5版本特有 -->
+    <resultMap id="label_version" type="Boolean">
+        <result property="isH5Version" column="IS_H5_VERSION"/>
+    </resultMap>
+    <select id="isLabelH5" resultMap="label_version" parameterType="ink.ulricj.entity.Label">
+        SELECT IS_H5_VERSION FROM tb_label WHERE LABEL_NAME = #{label.labelName}
+    </select>
+
+    <!-- 判断标签的类别 -->
+    <select id="judgeType" resultType="String" parameterType="Label">
+        SELECT `TYPE` FROM tb_label WHERE LABEL_NAME = #{label.labelName}
+    </select>
+
+    <!-- 根据标签名判断类别 -->
+    <select id="judgeTypeByLabelName" resultType="String" parameterType="String">
+        SELECT `TYPE` FROM tb_label WHERE LABEL_NAME = #{labelName}
+    </select>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ink.ulricj.mapper.LabelAndNumberMapper">
+
+    <!-- 插入 Label$Number 集合 -->
+    <insert id="insertLabelAndNumber" parameterType="java.util.List" keyProperty="lnId">
+        INSERT INTO tb_label_and_number (LABEL_NAME, `NUMBER`, URL_ID) VALUES
+        <foreach collection="list" item="labelAndNumber" separator=",">
+            (#{labelAndNumber.label.labelName}, #{labelAndNumber.number}, #{labelAndNumber.urlId})
+        </foreach>
+    </insert>
+
+</mapper>

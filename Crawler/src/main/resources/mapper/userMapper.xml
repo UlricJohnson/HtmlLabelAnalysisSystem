@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ink.ulricj.mapper.UserMapper">
+
+    <!-- 查询操作时， User 类的属性映射 -->
+    <resultMap id="user_select" type="User">
+        <id property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+        <!-- 表示 User 类中名为 carList 的属性是一个 Car 类集合，外键列为 user_id -->
+        <collection property="carList" ofType="Car" column="user_id">
+            <id property="cid" column="cid"/>
+            <result property="brand" column="brand"/>
+            <result property="userId" column="user_id"/>
+        </collection>
+    </resultMap>
+
+    <!-- 根据用户名查询用户及其车辆，使用数据库的 CONCAT() 函数拼接两个 '%' 字符，才能使用 #{} 进行模糊查询 -->
+    <select id="selectUserByUsernameXML" resultMap="user_select">
+        SELECT
+            u.*,
+            c.*
+        FROM tb_user u
+        JOIN tb_car c
+            ON u.uid = c.user_id
+        WHERE u.username
+            LIKE CONCAT('%',#{username},'%');
+    </select>
+
+    <!--=======================-->
+
+    <select id="selectLastInsertUId" resultType="java.lang.Long">
+        SELECT MAX(uid) FROM tb_user
+    </select>
+
+    <!-- 插入操作：mybatis无法进行级联插入操作，只能先插入 "一" 方对象，然后获取刚插入的ID，再赋值给 "多" 方的对象，再逐个插入 -->
+    <resultMap id="user_insert_base" type="User">
+        <id property="uid" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="sex" column="sex"/>
+        <result property="age" column="age"/>
+    </resultMap>
+    <resultMap id="user_insert" extends="user_insert_base" type="User">
+        <collection property="carList" ofType="Car" column="uid"
+                    select="ink.ulricj.mapper.CarMapper.selectCarByUserId"/>
+    </resultMap>
+
+    <!-- 插入用户 -->
+    <!-- 会自动生成主键 uid 字段， -->
+    <insert id="insertUserXML" parameterType="User" keyProperty="uid" keyColumn="uid">
+        INSERT INTO tb_user (
+            username,
+            sex,
+            age
+        )
+        VALUES (
+            #{username},
+            #{sex},
+            #{age}
+        )
+        <!--
+            keyProperty：标签中的语句查询出的结果赋值给指定的JavaBean属性
+            order： <selectKey/> 标签在 INSERT 语句 前(BEFORE) / 后(AFTER) 执行
+         -->
+        <!--<selectKey keyProperty="uid" order="AFTER">
+            &lt;!&ndash; 可能由于主键字段名不是“lId”，所以 LAST_INSERT_ID() 方法获取不到上一个插入的 ID&ndash;&gt;
+            SELECT MAX(uid) FROM tb_user;
+        </selectKey>-->
+    </insert>
+
+</mapper>

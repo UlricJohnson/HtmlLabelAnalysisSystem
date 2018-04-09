@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Analysis/Analysis.iml" filepath="$PROJECT_DIR$/Analysis/Analysis.iml" />
       <module fileurl="file://$PROJECT_DIR$/Crawler/Crawler.iml" filepath="$PROJECT_DIR$/Crawler/Crawler.iml" />
       <module fileurl="file://$PROJECT_DIR$/HtmlLabelAnalysisSystem.iml" filepath="$PROJECT_DIR$/HtmlLabelAnalysisSystem.iml" />
       <module fileurl="file://$PROJECT_DIR$/Webend/Webend.iml" filepath="$PROJECT_DIR$/Webend/Webend.iml" />

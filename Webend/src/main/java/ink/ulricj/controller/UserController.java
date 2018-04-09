@@ -22,7 +22,7 @@ public class UserController {
     private IUserService iUserService;
 
     /**
-     * 根据用户名模糊搜索用户
+     * 根据用户名模糊搜索用户（不包括拥有的车辆）
      *
      * @author Ulric
      * @date 2018/3/4
@@ -30,9 +30,6 @@ public class UserController {
     @RequestMapping("/findUserByUsername")
     public ModelAndView findUserByUsername(String username) {
         ModelAndView modelAndView = new ModelAndView();
-
-        // 传递的数据
-        ModelMap modelMap = new ModelMap();
 
         System.out.println("接收到的username: " + username);
 
@@ -42,24 +39,52 @@ public class UserController {
 
         // 转为 json 字符串
         ObjectMapper objectMapper = new ObjectMapper();
-
         try {
             String result = objectMapper.writeValueAsString(userList);
 
             // 没有异常，跳到首页并返回搜索结果
             modelAndView.setViewName("index");
-//            modelAndView.addObject("result", result);
-            modelAndView.addAllObjects(modelMap.addAttribute("result",result));
+            modelAndView.addObject("result", result);
         } catch (JsonProcessingException e) {
             // 发生异常，转到错误页面
             modelAndView.setViewName("error");
-//            modelAndView.addObject("errorMsg", e);
-            modelAndView.addAllObjects(modelMap.addAttribute("errorMsg",e));
-
+            modelAndView.addObject("errorMsg", e.getMessage());
             e.printStackTrace();
         } finally {
             return modelAndView;
         }
 
+    }
+
+    /**
+     * 根据用户ID搜索用户及其车辆
+     *
+     * @author Ulric
+     * @date 2018/3/9
+     */
+    @RequestMapping("/findUserById")
+    public ModelAndView findUserById(Long id) {
+        System.out.println("你输入的数据是：" + id);
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<User> userList = iUserService.findUserById(id);
+
+        System.out.println("搜索结果：" + userList);
+
+        // 转为 json 字符串
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            String result = objectMapper.writeValueAsString(userList);
+            modelAndView.setViewName("index");
+            modelAndView.addObject("result", result);
+        } catch (JsonProcessingException e) {
+            modelAndView.setViewName("error");
+            modelAndView.addObject("errorMsg", e.getMessage());
+            e.printStackTrace();
+        } finally {
+            return modelAndView;
+        }
     }
 }

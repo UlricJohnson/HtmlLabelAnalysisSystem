@@ -16,5 +16,13 @@ public interface IUserService {
      * @author Ulric
      * @date 2018/3/3
      */
-    public List<User> findUserByUsername(String username);
+    List<User> findUserByUsername(String username);
+
+    /**
+     * 根据用户ID搜索用户及其车辆
+     *
+     * @author Ulric
+     * @date 2018/3/9
+     */
+    List<User> findUserById(Long id);
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>html-label-analysis-system</artifactId>
+        <groupId>ink.ulricj</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>analysis</artifactId>
+    <version>${parent.version}</version>
+
+    <properties>
+        <!-- 爬虫模块，版本跟父工程一致 -->
+        <crawler.version>${parent.version}</crawler.version>
+    </properties>
+
+    <dependencies>
+        <!-- 爬虫模块 -->
+        <dependency>
+            <groupId>ink.ulricj</groupId>
+            <artifactId>crawler</artifactId>
+            <version>${crawler.version}</version>
+        </dependency>
+    </dependencies>
+</project>
